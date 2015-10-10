@@ -1,3 +1,13 @@
+/*
+This Code is for STEPPER MOTOR integration with mbed 1768 with direction control
+Course: CSE291E ( Robotics/Embedded Systems)
+Assignment: 2
+Last Modified: 09-Oct-2015
+Team: CodeIT
+Developers: Abhinav Garg; Abhijit Tripathy; Pulkit Bhatnagar
+University of California, San Diego
+*/
+
 #include "motor.h"
 
 DigitalOut motorpin1(p21);
