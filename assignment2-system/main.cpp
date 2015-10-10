@@ -1,7 +1,17 @@
+/*
+This Code is for STEPPER MOTOR & SENSOR integration with mbed 1768 with Speed/Direction Control
+Course: CSE291E ( Robotics/Embedded Systems)
+Assignment: 2
+Last Modified: 09-Oct-2015
+Team: CodeIT
+Developers: Abhinav Garg; Abhijit Tripathy; Pulkit Bhatnagar
+University of California, San Diego
+*/
+
 #include "motor.h"
 #include "ultra.h"
 
-#define MAX_CLOCK_DISTANCE 14
+#define MAX_CLOCK_DISTANCE 14				// Reference Point 14cm
 #define MIN_CLOCK_DISTANCE 4
 #define MAX_ANTICLOCK_DISTANCE 24
 
@@ -11,7 +21,7 @@ Timer pulse_width;
 float dist = 0.0;
 bool flag = true;
 
-void calibrate(float d)
+void calibrate(float d)					// Function for Speed modulation with distance
 {    
     int distance = (int)d;
     
@@ -46,7 +56,7 @@ void calibrate(float d)
 }
 
 
-int ultra_timer_duration()
+int ultra_timer_duration()						//Return Timer count
 {
     int duration;
     duration = pulse_width.read_us();
@@ -55,14 +65,14 @@ int ultra_timer_duration()
     return duration;
 }
 
-void ultra_timer_on()
+void ultra_timer_on()							// Start Timer
 {
     pulse_width.reset();
     pulse_width.start();
     //term.printf("\nECHO HIGH" );
 }
 
-void ultra_timer_off()
+void ultra_timer_off()						//Stop Timer, calculate distance, update speed of motor
 {    
     pulse_width.stop();
     int duration = ultra_timer_duration();       
@@ -73,15 +83,15 @@ void ultra_timer_off()
 }
 
 
-int main()
+int main()									// Main Program
 {
     motor_initialize();
-    echo.rise(&ultra_timer_on);
-    echo.fall(&ultra_timer_off);
+    echo.rise(&ultra_timer_on);				// Interrupt on Echo posedge
+    echo.fall(&ultra_timer_off);			//Interrupt on Echo Negedge
      
-    while(1) 
+    while(1) 							//Trigger of 10us
     {
-        ultra_call_trigger();  
+        ultra_call_trigger();  			
         
         if(flag)
         {
