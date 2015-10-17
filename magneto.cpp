@@ -1,13 +1,12 @@
 /*
-This Code is for testing magnetometer sensor connectivity integration with mbed 1768 with communciation via I2c
+This Code is for MAGNETOMETER integration with I2C in mbed 1768 with 1Hz Console update
 Course: CSE291E ( Robotics/Embedded Systems)
 Assignment: 3
-Last Modified: 16-Oct-2015
+Last Modified: 15-Oct-2015
 Team: CodeIT
 Developers: Abhinav Garg; Abhijit Tripathy; Pulkit Bhatnagar
 University of California, San Diego
 */
-
 
 #include "mbed.h"
 
@@ -42,7 +41,7 @@ char read_byte_i2c (int addr, int reg)       // Reads one byte from an I2C bus S
 void write_byte_i2c(int addr, int reg,char value)             // Write one byte to an I2C bus START-->ADDR-->SUBADDR-->DATA-->STOP 
 {    
     i2c.start();
-    i2c.write(addr);                                          // Slave/Device address
+    i2c.write(addr);                                         // Slave/Device address
     i2c.write(reg);                                         // Subaddress (register addess)
     i2c.write(value);
     i2c.stop();
@@ -79,6 +78,7 @@ int main()
         Y_mag =  (yH << 8) | (yL) ;
         Z_mag =  (zH << 8) | (zL) ;
       
+         terminal.printf("Magnetometer Readings:\n");
          terminal.printf("X:%d \t Y:%d \t Z:%d \n", X_mag, Y_mag, Z_mag);
         
           
