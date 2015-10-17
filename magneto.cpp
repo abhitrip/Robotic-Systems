@@ -1,3 +1,14 @@
+/*
+This Code is for testing magnetometer sensor connectivity integration with mbed 1768 with communciation via I2c
+Course: CSE291E ( Robotics/Embedded Systems)
+Assignment: 3
+Last Modified: 16-Oct-2015
+Team: CodeIT
+Developers: Abhinav Garg; Abhijit Tripathy; Pulkit Bhatnagar
+University of California, San Diego
+*/
+
+
 #include "mbed.h"
 
 I2C i2c(p9, p10); //SDA, SCL
