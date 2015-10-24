@@ -1,3 +1,13 @@
+/*
+This Code is for OLED integration with I2C in mbed 1768 for Text Display
+Course: CSE291E ( Robotics/Embedded Systems)
+Assignment: 4
+Last Modified: 22-Oct-2015
+Team: CodeIT
+Developers: Abhinav Garg; Abhijit Tripathy; Pulkit Bhatnagar
+University of California, San Diego
+*/
+
 #include "oled.h"
 
 char story[] = "An embedded system is a computer system with a dedicated function within a larger mechanical or electrical system, often with real-time computing constraints. It is embedded as part of a complete device often including hardware and mechanical parts. Embedded systems control many devices in common use today. Examples of properties typical of embedded computers when compared with general-purpose ones are low power consumption, small size, rugged operating ranges, and low per-unit cost. This comes at the price of limited processing resources, which make them significantly more difficult to program and to interface with. However, by building intelligence mechanisms on the top of the hardware, taking advantage of possible existing sensors and the existence of a network of embedded units, one can both optimally manage available resources at the unit and network levels as well as provide augmented functionalities, well beyond those available.[4] For example, intelligent techniques can be designed to manage power consumption of embedded systems. Modern embedded systems are often based on microcontrollers (i.e. CPUs with integrated memory or peripheral interfaces)[6] but ordinary microprocessors (using external chips for memory and peripheral interface circuits) are also still common, especially in more complex systems. In either case, the processor(s) used may be types ranging from general purpose to those specialised in certain class of computations, or even custom designed for the application at hand. A common standard class of dedicated processors is the digital signal processor (DSP)." 
