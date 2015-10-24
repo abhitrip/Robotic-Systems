@@ -57,13 +57,13 @@ void Adafruit_SSD1306::SingleChar(char c)
 		CharBuff[i] =0 ; // Initialise the Display Buffer to zero
 	} 
 	
-	int idx = c-32;
+	int idx = c-32; // Ascii code - 32 = index in font array
 	for(i=0;i<5;i++)
-		CharBuff[i] = Font5x7[idx*5+i];
+		CharBuff[i] = Font5x7[idx*5+i]; // Since each char is represented as 5 Bytes 
 	
 	
     
-    std::copy(
+    std::copy(              // USing stl to copy buffers
         &CharBuff[0]
         , &CharBuff[0] + 5
         , buffer.begin()
