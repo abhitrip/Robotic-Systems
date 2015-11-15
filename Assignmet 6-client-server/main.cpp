@@ -2,7 +2,7 @@
 This Code is for BEAGLEBONE Integration with RADAR SYSTEM integration using FCFS on mbed 1768 which detects an object and displays on OLED.
 Course: CSE291E ( Robotics/Embedded Systems)
 Assignment: 5
-Last Modified: 05-Nov-2015
+Last Modified: 12-Nov-2015
 Team: CodeIT
 Developers: Abhinav Garg; Abhijit Tripathi; Pulkit Bhatnagar
 University of California, San Diego
@@ -32,7 +32,7 @@ event e;        //Create an event for pushing tasks in queue.
     
 int main()
 {
-//uart.baud(115200);
+//uart.baud(57600);
 
     e.pr = low;     //Default priority for FCFS
 
@@ -58,6 +58,7 @@ int t[6]={0};
     char cmd_get;
     int command;
     bool flag_motor = false;
+    bool flag_first_head = true;
 //Push events in queue and service FIFO
     while(1)
     {      
@@ -97,6 +98,8 @@ int t[6]={0};
                     e.type = 1;
                     queue_push(e);            
                     }
+                flag_first_head=true;
+
             }
             break;
             
@@ -104,17 +107,23 @@ int t[6]={0};
             case stop: 
             {
                 printf("\nMotor Stop....");
+                flag_first_head=true;
                 break;                   //Do nothing
             }
             
             case heading:
             {
-                    int head;
-                    //angle = (int) theta/3.5;                  // theta = (angle*3.5) Replace by heading
-                    //angle=0;
-                    //angle = (int) head/3.5;
+                    
                     printf("\nMotor at Heading....");
+                    //Moves to a specified heading
+                    if(flag_first_head){
+                    for (int i = 0 ; i< 20; i++) {
+                        motor_clockwise();
+                    }
+                    }
+                    //Rotate in 15deg only
                     if (flag_motor) {
+                    flag_first_head=false;
                     angle=scan_at_head();   
                     e.type = 3;
                     queue_push(e);            
@@ -135,12 +144,12 @@ int t[6]={0};
                 printf("\nObject[%d] Located at: X=%f,Y=%f", i, x, y);
                 printf("\nObject[%d] Located at: r=%f,theta=%f",i, o[i], theta);
                 
-                //uart.printf("\nObject[%d] Located at: X=%f,Y=%f", i, x, y);
-                //uart.printf("\n\rObject[%d] Located at: r=%f,theta=%f", i, o[i], theta);
-                uart.printf("%f,%f", x, y);
+                uart.printf("\n\rObject[%d] Located at: (X=%f,Y=%f) and (r=%f,theta=%f)", i, x, y, o[i], theta);
+                //uart.printf("%f,%f", x, y);
                 }
                 //uart.putc('q');
-                
+                flag_first_head=true;
+
             }
             break;
         }
