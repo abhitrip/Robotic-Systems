@@ -1,3 +1,14 @@
+/*
+This Code is for the Client side i.e. Laptop using C Socket Programming 
+on Linux.  The Laptop i.e. the client should use the same wifi network as 
+the client.
+Course: CSE291E ( Robotics/Embedded Systems)
+Assignment: 6
+Last Modified: 14-Nov-2015
+Team: CodeIT
+Developers: Abhinav Garg; Abhijit Tripathi; Pulkit Bhatnagar
+University of California, San Diego
+*/
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -19,6 +30,8 @@ int main(int argc,char *argv[])
   struct hostent *hp;   
   int cmd, command;
 
+
+  /* Create Socket */
   sock = socket(AF_INET,SOCK_STREAM,0);
   if(sock<0)
   {
@@ -38,6 +51,7 @@ int main(int argc,char *argv[])
   memcpy(&server.sin_addr,hp->h_addr,hp->h_length);
 
   server.sin_port = htons(5000);
+  /* Connect Socket */
 
   if(connect(sock,(struct sockaddr*)&server,sizeof(server))<0)
   {
@@ -59,16 +73,20 @@ do {
         command = htonl(cmd);	
 
 //Send Command to Server/BBB
+       if(cmd==5) {
+            close(sock);
+            exit(0);   
+            }   
   	 if(send(sock,&command,sizeof(command),0)<0)
   	 {
      		perror("Could not connect to Beagle...");
      		close(sock);
      		exit(1);
   	 }
-        if(cmd == 5) { exit(0);} //Quit
+       // if(cmd == 5) { exit(0);} //Quit
 
 //Receive Data from BBB
-  	 else
+  	 else if(cmd==4) 
   	 {
      		memset(buff,0,sizeof(buff)); 
      		if(recv(sock,buff,sizeof(buff),0)<0)
@@ -79,13 +97,22 @@ do {
      		}
      		else
     		{
-    		printf("\nData received from Radar = %s \n",buff);
+    		 //fprintf(stderr,"\nData received from Radar = %s \n",buff);
+             ; // Nop
     		}
  	 }
+        else
+            {
+               //fprintf(stderr,"cmd = %d",cmd);
+              ; //Nop  
+
+             }
+
+
 
 }while(1);
   
-close(sock);
+close(sock); //Close socket
 
 return 0;
  
